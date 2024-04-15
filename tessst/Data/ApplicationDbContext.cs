@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fragrance_Web_App.Data
+namespace tessst.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
