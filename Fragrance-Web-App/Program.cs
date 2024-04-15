@@ -1,4 +1,5 @@
 using Fragrance_Web_App.Data;
+using Fragrance_Web_App.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+app.PrepareDatabase();
 
 if (app.Environment.IsDevelopment())
 {
