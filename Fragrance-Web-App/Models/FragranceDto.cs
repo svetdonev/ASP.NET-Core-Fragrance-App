@@ -1,4 +1,6 @@
-﻿namespace Fragrance_Web_App.Data.Models
+﻿using Fragrance_Web_App.Data.Models;
+
+namespace Fragrance_Web_App.Models
 {
     public class FragranceDto
     {
@@ -10,5 +12,6 @@
         public string ImageUrl { get; set; }
         public Category Category { get; set; }
         public IEnumerable<Note> Notes { get; set; }
+        public IEnumerable<CategoryDto> Categories { get; set; }
     }
 }

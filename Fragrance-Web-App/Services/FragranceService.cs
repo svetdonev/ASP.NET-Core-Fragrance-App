@@ -16,5 +16,10 @@ namespace Fragrance_Web_App.Services
 
             return await fragranceRespository.Create(fragrance);
         }
+
+        public async Task<IEnumerable<CategoryDto>> GetFragranceCategories()
+        {
+            return await fragranceRespository.GetFragranceCategories();
+        }
     }
 }

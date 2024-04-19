@@ -23,6 +23,8 @@ namespace Fragrance_Web_App.Mapping
                         dest.FragranceNotes.Add(fragranceNote);
                     }
                 });
+
+            this.CreateMap<CategoryDto, Category>();
         }
     }
 }
