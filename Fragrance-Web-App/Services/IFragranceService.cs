@@ -1,6 +1,9 @@
-﻿namespace Fragrance_Web_App.Services
+﻿using Fragrance_Web_App.Models;
+
+namespace Fragrance_Web_App.Services
 {
-    public class IFragranceService
+    public interface IFragranceService
     {
+        Task<FragranceDto> CreateFragrance(FragranceCreateRequest request);
     }
 }
