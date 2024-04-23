@@ -1,11 +1,16 @@
 using Fragrance_Web_App.Data;
 using Fragrance_Web_App.Infrastructure;
+using Fragrance_Web_App.Repositories;
+using Fragrance_Web_App.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddScoped<IFragranceService, FragranceService>();
+builder.Services.AddScoped<IFragranceRepository, FragranceSqlRepository>();
 builder.Services.AddDbContext<FragranceAppDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
