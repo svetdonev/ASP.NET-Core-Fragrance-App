@@ -1,5 +1,6 @@
 using Fragrance_Web_App.Data;
 using Fragrance_Web_App.Infrastructure;
+using Fragrance_Web_App.Mapping;
 using Fragrance_Web_App.Repositories;
 using Fragrance_Web_App.Services;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+builder.Services.AddAutoMapper(typeof(FragranceMappingProfile));
 builder.Services.AddScoped<IFragranceService, FragranceService>();
 builder.Services.AddScoped<IFragranceRepository, FragranceSqlRepository>();
 builder.Services.AddDbContext<FragranceAppDbContext>(options =>

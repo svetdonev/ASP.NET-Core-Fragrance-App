@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fragrance_Web_App.Controllers
 {
-    public class FragranceController(IFragranceService fragranceService, IMapper mapper) : Controller\
+    public class FragranceController(IFragranceService fragranceService, IMapper mapper) : Controller
     { 
         public async Task<IActionResult> Add()
         {
