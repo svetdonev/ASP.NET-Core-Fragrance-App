@@ -14,6 +14,7 @@ namespace Fragrance_Web_App.Infrastructure
             data.Database.Migrate();
 
             SeedCategories(data);
+            SeedNotes(data);
 
             return app;
         }
@@ -30,6 +31,25 @@ namespace Fragrance_Web_App.Infrastructure
                 new Category { Name = "Men's Perfumes"},
                 new Category { Name = "Women's Perfumes"},
                 new Category { Name = "Unisex Perfumes"},
+            });
+
+            data.SaveChanges();
+        }
+
+        private static void SeedNotes(FragranceAppDbContext data)
+        {
+            if(data.Notes.Any())
+            {
+                return;
+            }
+
+            data.Notes.AddRange(new[]
+            {
+                new Note { Name = "Woody"},
+                new Note { Name = "Aromatic"},
+                new Note { Name = "Fruity"},
+                new Note { Name = "Ozonic"},
+                new Note { Name = "Citrus"},
             });
 
             data.SaveChanges();
