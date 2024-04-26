@@ -51,9 +51,9 @@ namespace Fragrance_Web_App.Data
 
             base.OnModelCreating(builder);
         }
-        public DbSet<Fragrance> Fragrances { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Note> Notes { get; set; }
-        public DbSet<FragranceNote> FragranceNotes { get; set; }
+        public DbSet<Fragrance> Fragrances { get; init; }
+        public DbSet<Category> Categories { get; init; }
+        public DbSet<Note> Notes { get; init; }
+        public DbSet<FragranceNote> FragranceNotes { get; init; }
     }
 }
