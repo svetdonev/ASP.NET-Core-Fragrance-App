@@ -43,14 +43,14 @@ namespace Fragrance_Web_App.Infrastructure
                 return;
             }
 
-            data.Notes.AddRange(new[]
-            {
+            data.Notes.AddRange(
+            [
                 new Note { Name = "Woody"},
                 new Note { Name = "Aromatic"},
                 new Note { Name = "Fruity"},
                 new Note { Name = "Ozonic"},
                 new Note { Name = "Citrus"},
-            });
+            ]);
 
             data.SaveChanges();
         }

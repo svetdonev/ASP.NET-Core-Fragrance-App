@@ -14,12 +14,22 @@ namespace Fragrance_Web_App.Services
 
             fragrance.FragranceNotes.ToList().ForEach(fn => fn.FragranceId = fragrance.Id);
 
-            return await fragranceRespository.Create(fragrance);
+            return await fragranceRespository.CreateFragrance(fragrance);
         }
 
         public async Task<IEnumerable<CategoryDto>> GetFragranceCategories()
         {
             return await fragranceRespository.GetFragranceCategories();
+        }
+
+        public Task<IEnumerable<FragranceDto>> GetFragrances(FragranceQuery fragranceQuery)
+        {
+            return fragranceRespository.GetFragrances(fragranceQuery);
+        }
+
+        public async Task<IEnumerable<NoteDto>> GetNotes()
+        {
+            return await fragranceRespository.GetNotes();
         }
     }
 }

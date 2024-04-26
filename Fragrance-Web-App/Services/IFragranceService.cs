@@ -5,6 +5,8 @@ namespace Fragrance_Web_App.Services
     public interface IFragranceService
     {
         Task<FragranceDto> CreateFragrance(FragranceCreateRequest request);
+        Task<IEnumerable<FragranceDto>> GetFragrances(FragranceQuery fragranceQuery);
         Task<IEnumerable<CategoryDto>> GetFragranceCategories();
+        Task<IEnumerable<NoteDto>> GetNotes();
     }
 }

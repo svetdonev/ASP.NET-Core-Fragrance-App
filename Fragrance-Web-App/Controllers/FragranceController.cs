@@ -9,9 +9,10 @@ namespace Fragrance_Web_App.Controllers
     { 
         public async Task<IActionResult> Add()
         {
-            return View(new FragranceDto
+            return View(new FragranceCreateRequest
             {
-                Categories = await fragranceService.GetFragranceCategories()
+                Categories = await fragranceService.GetFragranceCategories(),
+                Notes = await fragranceService.GetNotes()
             });
         }
 

@@ -28,7 +28,10 @@ namespace Fragrance_Web_App.Models
 
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
-        public IEnumerable<CategoryDto> Categories { get; set; }
+
+        [Display(Name = "Notes")]
         public IEnumerable<int> NoteIds { get; set; }
+        public IEnumerable<CategoryDto> Categories { get; set; }
+        public IEnumerable<NoteDto> Notes { get; set; }
     }
 }
