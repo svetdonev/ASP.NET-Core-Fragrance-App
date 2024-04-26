@@ -21,7 +21,7 @@ namespace Fragrance_Web_App.Infrastructure
 
         private static void SeedCategories(FragranceAppDbContext data)
         {
-            if(data.Categories.Any())
+            if (data.Categories.Any())
             {
                 return;
             }
@@ -38,18 +38,18 @@ namespace Fragrance_Web_App.Infrastructure
 
         private static void SeedNotes(FragranceAppDbContext data)
         {
-            if(data.Notes.Any())
+            if (data.Notes.Any())
             {
                 return;
             }
 
             data.Notes.AddRange(
             [
-                new Note { Name = "Woody"},
-                new Note { Name = "Aromatic"},
-                new Note { Name = "Fruity"},
-                new Note { Name = "Ozonic"},
-                new Note { Name = "Citrus"},
+                new Note { Name = "Woody", Color = "Brown" },
+                new Note { Name = "Aromatic", Color = "Green" },
+                new Note { Name = "Fruity", Color = "Orange" },
+                new Note { Name = "Ozonic", Color = "Blue" },
+                new Note { Name = "Citrus", Color = "Yellow" },
             ]);
 
             data.SaveChanges();

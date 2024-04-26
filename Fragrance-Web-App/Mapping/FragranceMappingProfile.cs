@@ -24,7 +24,7 @@ namespace Fragrance_Web_App.Mapping
                     }
                 });
 
-            this.CreateMap<CategoryDto, Category>();
+            this.CreateMap<Category, CategoryDto>();
             this.CreateMap<Note, NoteDto>();
         }
     }
