@@ -8,5 +8,6 @@ namespace Fragrance_Web_App.Services
         Task<IEnumerable<FragranceDto>> GetFragrances(FragranceQuery fragranceQuery);
         Task<IEnumerable<CategoryDto>> GetFragranceCategories();
         Task<IEnumerable<NoteDto>> GetNotes();
+        Task<FragranceDto> FragranceDetails(string fragranceId);
     }
 }

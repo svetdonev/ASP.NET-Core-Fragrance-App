@@ -6,5 +6,6 @@
         public string SearchTerm { get; set; }
         public OrderBy OrderByClause { get; set; }
         public IEnumerable<CategoryDto> Categories { get; set; }
+        public IEnumerable<FragranceDto> Fragrances { get; set; }
     }
 }

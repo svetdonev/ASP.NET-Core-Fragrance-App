@@ -34,7 +34,7 @@ namespace Fragrance_Web_App.Extensions
                 case "year":
                     return direction == OrderDirection.Asc ? query.OrderBy(f => f.Year) : query.OrderByDescending(f => f.Year);
                 case "name":
-                    return direction == OrderDirection.Desc ? query.OrderBy(f => f.Name) : query.OrderByDescending(f => f.Name);
+                    return direction == OrderDirection.Asc ? query.OrderBy(f => f.Name) : query.OrderByDescending(f => f.Name);
                 default:
                     return query.OrderByDescending(f => f.Name);
             }

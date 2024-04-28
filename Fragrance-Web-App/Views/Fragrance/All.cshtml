@@ -1,0 +1,62 @@
+﻿@model FragranceQuery
+
+@{
+    ViewData["Title"] = "All fragrances";
+}
+
+<div class="mb-5"></div>
+
+
+<form method="get" class="example">
+    <div class="row mb-5 align-items-end">
+        <div class="col-md-4">
+            <div class="form-group mb-0">
+                <label asp-for="CategoryId" class="mb-1">Category</label>
+                <select asp-for="CategoryId" id="categorySelect" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-4 d-flex align-items-center">
+            <div class="d-flex">
+                <input class="form-control" asp-for="SearchTerm" type="text" placeholder="Type to search..">
+                <button type="submit" class="btn btn-primary ml-1 text-center"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<div class="mb-5"></div>
+
+<div class="row" id="fragranceCardsContainer">
+    @foreach (var fragrance in Model.Fragrances)
+    {
+        <div class="col-md-3 fragrance-card" data-category="@fragrance.Category">
+            <div class="card mb-3">
+                <img class="card-img-top" style="height: auto; width:auto;" src="@fragrance.ImageUrl" alt="@fragrance.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@fragrance.Name (@fragrance.Year)</h5>
+                    <p class="card-text">@fragrance.Type</p>
+                    <p class="card-text">@fragrance.Category</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Top Notes: </li>
+                    <li class="list-group-item">Middle Notes: </li>
+                    <li class="list-group-item">Base Notes: </li>
+                </ul>
+                <div class="card-body text-center">
+                    <a asp-controller="Fragrances" asp-action="Details" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Details</a>
+                    <a asp-controller="Fragrances" asp-action="Delete" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Delete</a>
+                    <a asp-controller="Fragrances" asp-action="Edit" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

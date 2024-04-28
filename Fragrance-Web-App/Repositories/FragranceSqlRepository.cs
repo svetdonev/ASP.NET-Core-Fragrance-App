@@ -9,6 +9,7 @@ namespace Fragrance_Web_App.Repositories
 {
     public class FragranceSqlRepository(FragranceAppDbContext dbContext, IMapper mapper) : IFragranceRepository
     {
+        /// <inheritdoc />
         public async Task<FragranceDto> CreateFragrance(Fragrance fragrance)
         {
             await dbContext.Fragrances.AddAsync(fragrance);
@@ -19,8 +20,8 @@ namespace Fragrance_Web_App.Repositories
 
         public async Task<IEnumerable<CategoryDto>> GetFragranceCategories()
         {
-            var categories = await dbContext.Categories.ToListAsync();
-            var categoryDtos = mapper.Map<IEnumerable<CategoryDto>>(categories);
+            var categories = await dbContext.Categories.AsNoTracking().ToListAsync();
+            var categoryDtos = mapper.Map<List<CategoryDto>>(categories);
 
             return categoryDtos;
         }
@@ -28,13 +29,16 @@ namespace Fragrance_Web_App.Repositories
         public async Task<IEnumerable<FragranceDto>> GetFragrances(FragranceQuery fragranceQuery)
         {
             var fragrances = await dbContext.Fragrances
+                .Include(f => f.Category)
+                .Include(f => f.FragranceNotes)
+                .ThenInclude(fn => fn.Note)
                 .AsNoTracking()
                 .FilterByCategoryId(fragranceQuery.CategoryId)
                 .FilterBySearchTerm(fragranceQuery.SearchTerm)
                 .OrderByPropertyName(fragranceQuery.OrderByClause?.PropertyName, fragranceQuery.OrderByClause?.Direction ?? OrderDirection.Desc)
                 .ToListAsync();
 
-            return mapper.Map<IEnumerable<Fragrance>, IEnumerable<FragranceDto>>(fragrances);
+            return mapper.Map<List<Fragrance>, List<FragranceDto>>(fragrances);
         }
 
         public async Task<IEnumerable<NoteDto>> GetNotes()
@@ -43,6 +47,18 @@ namespace Fragrance_Web_App.Repositories
             var noteDtos = mapper.Map<List<NoteDto>>(notes);
 
             return noteDtos;
+        }
+        public async Task<FragranceDto> FragranceDetails(string fragranceId)
+        {
+            var fragrance = await dbContext.Fragrances
+                .Include(f => f.Category)
+                .Include(f => f.FragranceNotes)
+                .ThenInclude(fn => fn.Note)
+                .FirstOrDefaultAsync(f => f.Id == fragranceId);
+
+            var fragranceDto = mapper.Map<FragranceDto>(fragrance);
+
+            return fragranceDto;
         }
     }
 }
