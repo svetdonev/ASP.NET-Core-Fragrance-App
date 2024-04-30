@@ -44,7 +44,7 @@
                 <div class="card-body">
                     <h5 class="card-title">@fragrance.Name (@fragrance.Year)</h5>
                     <p class="card-text">@fragrance.Type</p>
-                    <p class="card-text">@fragrance.Category</p>
+                    <p class="card-text">@fragrance.Category.Name</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Top Notes: </li>
@@ -52,9 +52,9 @@
                     <li class="list-group-item">Base Notes: </li>
                 </ul>
                 <div class="card-body text-center">
-                    <a asp-controller="Fragrances" asp-action="Details" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Details</a>
-                    <a asp-controller="Fragrances" asp-action="Delete" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Delete</a>
-                    <a asp-controller="Fragrances" asp-action="Edit" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Edit</a>
+                    <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Details</a>
+                    <a asp-controller="Fragrance" asp-action="Delete" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Delete</a>
+                    <a asp-controller="Fragrance" asp-action="Edit" asp-route-fragranceId="@fragrance.Id" class="btn btn-primary">Edit</a>
                 </div>
             </div>
         </div>

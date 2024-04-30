@@ -31,9 +31,9 @@ namespace Fragrance_Web_App.Services
         {
             return await fragranceRespository.GetNotes();
         }
-        public Task<FragranceDto> FragranceDetails(string fragranceId)
+        public async Task<FragranceDto> FragranceDetails(string fragranceId)
         {
-            return fragranceRespository.FragranceDetails(fragranceId);
+            return await fragranceRespository.FragranceDetails(fragranceId);
         }
     }
 }
