@@ -27,9 +27,9 @@ namespace Fragrance_Web_App.Services
             return fragranceRespository.GetFragrances(fragranceQuery);
         }
 
-        public Task<IEnumerable<NoteDto>> GetNotes()
+        public async Task<IEnumerable<NoteDto>> GetNotes()
         {
-            return fragranceRespository.GetNotes();
+            return await fragranceRespository.GetNotes();
         }
         public Task<FragranceDto> FragranceDetails(string fragranceId)
         {

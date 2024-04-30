@@ -45,11 +45,11 @@ namespace Fragrance_Web_App.Infrastructure
 
             data.Notes.AddRange(
             [
-                new Note { Name = "Woody", Color = "Brown" },
-                new Note { Name = "Aromatic", Color = "Green" },
-                new Note { Name = "Fruity", Color = "Orange" },
-                new Note { Name = "Ozonic", Color = "Blue" },
-                new Note { Name = "Citrus", Color = "Yellow" },
+                new Note { Name = "Woody"},
+                new Note { Name = "Aromatic"},
+                new Note { Name = "Fruity"},
+                new Note { Name = "Ozonic"},
+                new Note { Name = "Citrus"},
             ]);
 
             data.SaveChanges();

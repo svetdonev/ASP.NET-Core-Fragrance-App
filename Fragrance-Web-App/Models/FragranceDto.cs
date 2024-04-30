@@ -11,6 +11,6 @@ namespace Fragrance_Web_App.Models
         public string Type { get; set; }
         public string ImageUrl { get; set; }
         public CategoryDto Category { get; set; }
-        public IEnumerable<Note> Notes { get; set; }
+        public IEnumerable<Note> Notes { get; init; }
     }
 }

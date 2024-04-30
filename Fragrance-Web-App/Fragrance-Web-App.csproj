@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-Fragrance_Web_App-780e1d8b-4b2b-4a49-bdd4-c7a66bfed839</UserSecretsId>
     <RootNamespace>Fragrance_Web_App</RootNamespace>
