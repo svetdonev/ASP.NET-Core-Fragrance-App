@@ -35,5 +35,17 @@ namespace Fragrance_Web_App.Services
         {
             return await fragranceRespository.FragranceDetails(fragranceId);
         }
+
+        public async Task<FragranceDto> EditFragrance(string fragranceId, FragranceCreateRequest request)
+        {
+            var existingFragrance = await fragranceRespository.FragranceDetails(fragranceId);
+
+            if (existingFragrance == null)
+            {
+                return null;
+            }
+
+            return await fragranceRespository.EditFragrance(fragranceId, request);
+        }
     }
 }

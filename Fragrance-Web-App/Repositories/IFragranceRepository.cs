@@ -15,5 +15,7 @@ namespace Fragrance_Web_App.Repositories
         Task<IEnumerable<NoteDto>> GetNotes();
         Task<IEnumerable<CategoryDto>> GetFragranceCategories();
         Task<FragranceDto> FragranceDetails(string fragranceId);
+        Task<FragranceDto> EditFragrance(string fragranceId, FragranceCreateRequest request);
+
     }
 }

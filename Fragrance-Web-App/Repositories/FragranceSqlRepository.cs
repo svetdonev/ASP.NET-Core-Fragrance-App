@@ -60,5 +60,43 @@ namespace Fragrance_Web_App.Repositories
 
             return fragranceDto;
         }
+
+        public async Task<FragranceDto> EditFragrance(string fragranceId, FragranceCreateRequest request)
+        {
+            var fragrance = await dbContext.Fragrances.FirstOrDefaultAsync(f => f.Id == fragranceId);
+
+            if (fragrance == null)
+            {
+                return null;
+            }
+
+            fragrance.Name = request.Name;
+            fragrance.Year = request.Year;
+            fragrance.Description = request.Description;
+            fragrance.Type = request.Type;
+            fragrance.ImageUrl = request.ImageUrl;
+
+            var category = await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
+            if (category != null)
+            {
+                fragrance.Category = category;
+            }
+
+            if (request.NoteIds != null)
+            {
+                fragrance.FragranceNotes.Clear();
+                foreach (var noteId in request.NoteIds)
+                {
+                    var note = await dbContext.Notes.FirstOrDefaultAsync(n => n.Id == noteId);
+                    if (note != null)
+                    {
+                        fragrance.FragranceNotes.Add(new FragranceNote { Note = note });
+                    }
+                }
+            }
+
+            await dbContext.SaveChangesAsync();
+            return mapper.Map<FragranceDto>(fragrance);
+        }
     }
 }
