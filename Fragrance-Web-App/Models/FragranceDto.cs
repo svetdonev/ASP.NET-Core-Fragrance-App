@@ -4,7 +4,7 @@ namespace Fragrance_Web_App.Models
 {
     public class FragranceDto
     {
-        public string Id { get; init; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
         public string Description { get; set; }
