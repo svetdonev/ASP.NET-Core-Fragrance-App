@@ -1,1 +1,12 @@
-﻿<h1>Checking...</h1>
+﻿@model FragranceDto
+
+@{
+    ViewData["Title"] = "Delete ";
+}
+
+<form method="post" asp-controller="Fragrance" asp-action="Delete" asp-route-fragranceId="@Model.Id">
+    <h1 class="text-orange">WARNING !!!</h1>
+    <h4 class="text-orange">Are you sure you want to delete this fragrance?</h4>
+    <button type="submit" class="btn btn-outline-danger mb-4">Delete</button>
+    <a class="btn btn-outline-primary mb-4" asp-controller="Fragrance" asp-action="All">Cancel</a>
+</form>
