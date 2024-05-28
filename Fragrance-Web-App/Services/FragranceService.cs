@@ -36,16 +36,12 @@ namespace Fragrance_Web_App.Services
             return await fragranceRespository.FragranceDetails(fragranceId);
         }
 
-        public async Task<FragranceDto> EditFragrance(string fragranceId, FragranceCreateRequest request)
+        public Task UpdateFragrance(string fragranceId, FragranceUpdateRequest fragranceRequest)
         {
-            var existingFragrance = await fragranceRespository.FragranceDetails(fragranceId);
+            var fragrance = mapper.Map<FragranceUpdateRequest, Fragrance>(fragranceRequest);
+            fragrance.FragranceNotes.ToList().ForEach(fn => fn.FragranceId = fragrance.Id);
 
-            if (existingFragrance == null)
-            {
-                return null;
-            }
-
-            return await fragranceRespository.EditFragrance(fragranceId, request);
+            return fragranceRespository.UpdateFragrance(fragranceId, fragrance);
         }
     }
 }

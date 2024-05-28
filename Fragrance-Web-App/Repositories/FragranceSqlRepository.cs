@@ -61,42 +61,23 @@ namespace Fragrance_Web_App.Repositories
             return fragranceDto;
         }
 
-        public async Task<FragranceDto> EditFragrance(string fragranceId, FragranceCreateRequest request)
+        public async Task UpdateFragrance(string fragranceId, Fragrance fragrance)
         {
-            var fragrance = await dbContext.Fragrances.FirstOrDefaultAsync(f => f.Id == fragranceId);
+            var existingFragrance = await dbContext.Fragrances
+                .Include(f => f.Category)
+                .Include(f => f.FragranceNotes)
+                .ThenInclude(fn => fn.Note)
+                .FirstOrDefaultAsync(f => f.Id == fragranceId);
 
-            if (fragrance == null)
-            {
-                return null;
-            }
-
-            fragrance.Name = request.Name;
-            fragrance.Year = request.Year;
-            fragrance.Description = request.Description;
-            fragrance.Type = request.Type;
-            fragrance.ImageUrl = request.ImageUrl;
-
-            var category = await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == request.CategoryId);
-            if (category != null)
-            {
-                fragrance.Category = category;
-            }
-
-            if (request.NoteIds != null)
-            {
-                fragrance.FragranceNotes.Clear();
-                foreach (var noteId in request.NoteIds)
-                {
-                    var note = await dbContext.Notes.FirstOrDefaultAsync(n => n.Id == noteId);
-                    if (note != null)
-                    {
-                        fragrance.FragranceNotes.Add(new FragranceNote { Note = note });
-                    }
-                }
-            }
+            existingFragrance.Name = fragrance.Name;
+            existingFragrance.Year = fragrance.Year;
+            existingFragrance.Description = fragrance.Description;
+            existingFragrance.Type = fragrance.Type;
+            existingFragrance.ImageUrl = fragrance.ImageUrl;
+            existingFragrance.Category = fragrance.Category;
+            existingFragrance.FragranceNotes = fragrance.FragranceNotes;
 
             await dbContext.SaveChangesAsync();
-            return mapper.Map<FragranceDto>(fragrance);
         }
     }
 }

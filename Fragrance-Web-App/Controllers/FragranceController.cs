@@ -55,6 +55,11 @@ namespace Fragrance_Web_App.Controllers
         {
             var fragrance = await fragranceService.FragranceDetails(fragranceId);
 
+            if(fragrance == null)
+            {
+                return NotFound();
+            }
+
             return View(fragrance);
         }
 
@@ -62,34 +67,28 @@ namespace Fragrance_Web_App.Controllers
         public async Task<IActionResult> Edit(string fragranceId)
         {
             var fragrance = await fragranceService.FragranceDetails(fragranceId);
+
             if (fragrance == null)
             {
-                // Handle fragrance not found
                 return NotFound();
             }
 
             return View(fragrance);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(string fragranceId, FragranceCreateRequest request)
+        [HttpPut]
+        public async Task<IActionResult> Edit(string fragranceId, FragranceUpdateRequest request)
         {
-            if (ModelState.IsValid)
+            var fragrance = await fragranceService.FragranceDetails(fragranceId);
+
+            if(!ModelState.IsValid)
             {
-                var updatedFragrance = await fragranceService.EditFragrance(fragranceId, request);
-                if (updatedFragrance != null)
-                {
-                    return RedirectToAction("Details", new { fragranceId });
-                }
-                else
-                {
-                    // Handle fragrance not found
-                    return NotFound();
-                }
+                return View(fragrance);
             }
 
-            // If ModelState is not valid, return to the edit view with errors
-            return View(request);
+            await fragranceService.UpdateFragrance(fragranceId, request);
+
+            return Redirect($"/Fragrance/Details?fragranceId={fragrance.Id}");
         }
     }
 }

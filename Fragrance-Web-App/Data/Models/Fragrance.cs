@@ -26,6 +26,6 @@ namespace Fragrance_Web_App.Data.Models
         public string ImageUrl { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-        public ICollection<FragranceNote> FragranceNotes { get; init; } = new List<FragranceNote>();
+        public ICollection<FragranceNote> FragranceNotes { get; set; } = new List<FragranceNote>();
     }
 }
