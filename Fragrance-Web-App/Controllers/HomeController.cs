@@ -9,7 +9,11 @@ namespace Fragrance_Web_App.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(new IndexViewModel
+            {
+                FragrancesCount = fragranceService.GetTotalFragrancesCount(),
+                UsersCount = fragranceService.GetUsersCount()
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

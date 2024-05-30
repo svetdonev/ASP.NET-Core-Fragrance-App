@@ -48,5 +48,14 @@ namespace Fragrance_Web_App.Services
         {
             return fragranceRespository.DeleteFragrance(fragranceId);
         }
+        public int GetTotalFragrancesCount()
+        {
+            return fragranceRespository.GetTotalFragrancesCount();
+        }
+
+        public int GetUsersCount()
+        {
+            return fragranceRespository.GetUsersCount();
+        }
     }
 }

@@ -1,1 +1,13 @@
-﻿<h1>Hello!</h1>
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="text-center">
+    <p class="mb-2" style="font-size: 29px;"><Font face="Times New Roman">We have:</Font></p>
+    <ul class="list-inline" style="font-size: 18px;"> 
+        <li class="list-inline-item bg-transparent">Fragrances: @Model.FragrancesCount</li>
+        <li class="list-inline-item bg-transparent">Users: @Model.UsersCount</li>
+    </ul>
+</div>

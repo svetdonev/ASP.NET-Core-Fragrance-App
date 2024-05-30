@@ -94,5 +94,14 @@ namespace Fragrance_Web_App.Repositories
                 await dbContext.SaveChangesAsync();
             }
         }
+        public int GetTotalFragrancesCount()
+        {
+            return dbContext.Fragrances.Count();
+        }
+
+        public int GetUsersCount()
+        {
+            return dbContext.Users.Count();
+        }
     }
 }
