@@ -7,12 +7,17 @@ namespace Fragrance_Web_App.Controllers
 {
     public class HomeController(IFragranceService fragranceService) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var totalFragrances = fragranceService.GetTotalFragrancesCount();
+            var totalUsers = fragranceService.GetUsersCount();
+            var fragrances = await fragranceService.GetLatestFragrances();
+
             return View(new IndexViewModel
             {
-                FragrancesCount = fragranceService.GetTotalFragrancesCount(),
-                UsersCount = fragranceService.GetUsersCount()
+                FragrancesCount = totalFragrances,
+                UsersCount = totalUsers,
+                Fragrances = fragrances
             });
         }
 

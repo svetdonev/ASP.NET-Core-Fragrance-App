@@ -103,5 +103,22 @@ namespace Fragrance_Web_App.Repositories
         {
             return dbContext.Users.Count();
         }
+
+        public async Task<List<FragranceListingViewModel>> GetLatestFragrances()
+        {
+            return await dbContext.Fragrances
+                .OrderByDescending(f => f.Id)
+                .Select(f => new FragranceListingViewModel
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    ImageUrl = f.ImageUrl,
+                    Year = f.Year,
+                    Type = f.Type,
+                    Category = f.Category.Name
+                })
+                .Take(8)
+                .ToListAsync();
+        }
     }
 }

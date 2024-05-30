@@ -57,5 +57,10 @@ namespace Fragrance_Web_App.Services
         {
             return fragranceRespository.GetUsersCount();
         }
+
+        public Task<List<FragranceListingViewModel>> GetLatestFragrances()
+        {
+            return fragranceRespository.GetLatestFragrances();
+        }
     }
 }

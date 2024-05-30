@@ -5,6 +5,6 @@
         public int FragrancesCount { get; set; }
         public int ReviewsCount { get; set; }
         public int UsersCount { get; set; }
-        public List<FragranceDto> Fragrances {  get; set; }
+        public List<FragranceListingViewModel> Fragrances {  get; set; }
     }
 }

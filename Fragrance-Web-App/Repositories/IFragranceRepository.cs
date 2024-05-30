@@ -19,6 +19,7 @@ namespace Fragrance_Web_App.Repositories
         Task DeleteFragrance(string fragranceId);
         int GetTotalFragrancesCount();
         int GetUsersCount();
+        Task<List<FragranceListingViewModel>> GetLatestFragrances();
 
     }
 }

@@ -4,10 +4,108 @@
     ViewData["Title"] = "Welcome";
 }
 
+@{
+    var fragrances = Model.Fragrances;
+
+    var first = fragrances.ElementAtOrDefault(0);
+    var second = fragrances.ElementAtOrDefault(1);
+    var third = fragrances.ElementAtOrDefault(2);
+    var fourth = fragrances.ElementAtOrDefault(3);
+    var fifth = fragrances.ElementAtOrDefault(4);
+    var sixth = fragrances.ElementAtOrDefault(5);
+    var seventh = fragrances.ElementAtOrDefault(6);
+    var eighth = fragrances.ElementAtOrDefault(7);
+}
+
 <div class="text-center">
     <p class="mb-2" style="font-size: 29px;"><Font face="Times New Roman">We have:</Font></p>
-    <ul class="list-inline" style="font-size: 18px;"> 
+    <ul class="list-inline" style="font-size: 18px;">
         <li class="list-inline-item bg-transparent">Fragrances: @Model.FragrancesCount</li>
         <li class="list-inline-item bg-transparent">Users: @Model.UsersCount</li>
     </ul>
+</div>
+
+<div class="mb-3"></div>
+
+@if (!fragrances.Any())
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to the fragrance world!</h1>
+        <p class="lead">There are no fragrances in the system currently. You can add one!</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a asp-controller="Fragrance" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Fragrance</a>
+        </p>
+    </div>
+}
+
+<div>
+    @if (first != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@first.Id">
+            <img src="@first.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@first.Name">
+        </a>
+    }
+    @if (second != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@second.Id">
+            <img src="@second.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@second.Name">
+        </a>
+    }
+    @if (third != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@third.Id">
+            <img src="@third.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@third.Name">
+        </a>
+    }
+    @if (fourth != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@fourth.Id">
+            <img src="@fourth.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@fourth.Name">
+        </a>
+    }
+    @if (fifth != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@fifth.Id">
+            <img src="@fifth.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@fifth.Name">
+        </a>
+    }
+    @if (sixth != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@sixth.Id">
+            <img src="@sixth.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@sixth.Name">
+        </a>
+    }
+    @if (seventh != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@seventh.Id">
+            <img src="@seventh.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@seventh.Name">
+        </a>
+    }
+    @if (eighth != null)
+    {
+        <a asp-controller="Fragrance" asp-action="Details" asp-route-fragranceId="@eighth.Id">
+            <img src="@eighth.ImageUrl" class="img-thumbnail" style="height: 176px;" alt="@eighth.Name">
+        </a>
+    }
+</div>
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <a asp-controller="Fragrance" asp-action="All">
+                <img class="d-block w-120" src="~/in-background.jpg" alt="First slide">
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="mb-3"></div>
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" style="margin-left: 55px;">
+            <img class="d-block w-120" src="~/in-background2.jpg" alt="First slide">
+        </div>
+    </div>
 </div>
