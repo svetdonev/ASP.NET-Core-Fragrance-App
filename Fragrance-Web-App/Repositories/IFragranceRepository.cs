@@ -16,6 +16,7 @@ namespace Fragrance_Web_App.Repositories
         Task<IEnumerable<CategoryDto>> GetFragranceCategories();
         Task<FragranceDto> FragranceDetails(string fragranceId);
         Task UpdateFragrance(string fragranceId, Fragrance fragrance);
+        Task DeleteFragrance(string fragranceId);
 
     }
 }

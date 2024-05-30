@@ -79,5 +79,20 @@ namespace Fragrance_Web_App.Repositories
 
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task DeleteFragrance(string fragranceId)
+        {
+            var existingFragrance = await dbContext.Fragrances
+                .Include(f => f.Category)
+                .Include(f => f.FragranceNotes)
+                .ThenInclude(fn => fn.Note)
+                .FirstOrDefaultAsync(f => f.Id == fragranceId);
+
+            if (existingFragrance != null)
+            {
+                dbContext.Fragrances.Remove(existingFragrance);
+                await dbContext.SaveChangesAsync();
+            }
+        }
     }
 }

@@ -43,5 +43,10 @@ namespace Fragrance_Web_App.Services
 
             return fragranceRespository.UpdateFragrance(fragranceId, fragrance);
         }
+
+        public Task DeleteFragrance(string fragranceId)
+        {
+            return fragranceRespository.DeleteFragrance(fragranceId);
+        }
     }
 }

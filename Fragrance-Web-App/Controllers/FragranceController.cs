@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Fragrance_Web_App.Data.Models;
 using Fragrance_Web_App.Models;
 using Fragrance_Web_App.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -89,6 +90,35 @@ namespace Fragrance_Web_App.Controllers
             await fragranceService.UpdateFragrance(fragranceId, request);
 
             return Redirect($"/Fragrance/Details?fragranceId={fragrance.Id}");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string fragranceId)
+        {
+            var fragrance = await fragranceService.FragranceDetails(fragranceId);
+
+            if (fragrance == null)
+            {
+                return NotFound();
+            }
+
+            return View(fragrance);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(string fragranceId)
+        {
+            var fragrance = await fragranceService.FragranceDetails(fragranceId);
+
+            if (!ModelState.IsValid)
+            {
+                return View(fragrance);
+            }
+
+            await fragranceService.DeleteFragrance(fragranceId);
+
+            return RedirectToAction(nameof(All));
         }
     }
 }
