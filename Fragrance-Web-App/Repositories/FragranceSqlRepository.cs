@@ -4,6 +4,7 @@ using Fragrance_Web_App.Data.Models;
 using Fragrance_Web_App.Extensions;
 using Fragrance_Web_App.Models;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Fragrance_Web_App.Repositories
 {
@@ -32,6 +33,8 @@ namespace Fragrance_Web_App.Repositories
                 .Include(f => f.Category)
                 .Include(f => f.FragranceNotes)
                 .ThenInclude(fn => fn.Note)
+                .Skip((fragranceQuery.CurrentPage - 1) * FragranceQuery.MoviesPerPage)
+                .Take(FragranceQuery.MoviesPerPage)
                 .AsNoTracking()
                 .FilterByCategoryId(fragranceQuery.CategoryId)
                 .FilterBySearchTerm(fragranceQuery.SearchTerm)
