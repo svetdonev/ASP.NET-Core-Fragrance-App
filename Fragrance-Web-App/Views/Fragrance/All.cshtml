@@ -38,7 +38,7 @@
         previousPage = 1;
     }
 
-    var maxPage = Math.Ceiling((double)Model.Fragrances.Count() / FragranceQuery.MoviesPerPage);
+    var maxPage = Math.Ceiling((double)Model.TotalFragrances / FragranceQuery.MoviesPerPage);
 }
 
 @{
@@ -75,7 +75,14 @@
                 <div class="card-body">
                     <h5 class="card-title">@fragrance.Name (@fragrance.Year)</h5>
                     <p class="card-text">@fragrance.Type</p>
-                    <p class="card-text">@fragrance.Category.Name</p>
+                    @if (fragrance.Category != null)
+                    {
+                        <p class="card-text">@fragrance.Category.Name</p>
+                    }
+                    else
+                    {
+                        <p class="card-text">No Category</p>
+                    }
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Top Notes: </li>

@@ -29,10 +29,26 @@ namespace Fragrance_Web_App.Repositories
 
         public async Task<IEnumerable<FragranceDto>> GetFragrances(FragranceQuery fragranceQuery)
         {
-            var fragrances = await dbContext.Fragrances
+            var query = dbContext.Fragrances
                 .Include(f => f.Category)
                 .Include(f => f.FragranceNotes)
                 .ThenInclude(fn => fn.Note)
+                .AsQueryable();
+
+            if (fragranceQuery.CategoryId.HasValue)
+            {
+                query = query.Where(f => f.CategoryId == fragranceQuery.CategoryId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(fragranceQuery.SearchTerm))
+            {
+                query = query.Where(f => f.Name.Contains(fragranceQuery.SearchTerm));
+            }
+
+            fragranceQuery.TotalFragrances = await query.CountAsync();
+
+
+            var fragrances = await dbContext.Fragrances
                 .Skip((fragranceQuery.CurrentPage - 1) * FragranceQuery.MoviesPerPage)
                 .Take(FragranceQuery.MoviesPerPage)
                 .AsNoTracking()
