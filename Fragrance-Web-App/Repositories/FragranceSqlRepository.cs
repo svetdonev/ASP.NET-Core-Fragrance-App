@@ -45,20 +45,22 @@ namespace Fragrance_Web_App.Repositories
                 query = query.Where(f => f.Name.Contains(fragranceQuery.SearchTerm));
             }
 
+            if (fragranceQuery.OrderByClause != null)
+            {
+                query = query.OrderByPropertyName(fragranceQuery.OrderByClause.PropertyName, fragranceQuery.OrderByClause.Direction);
+            }
+
             fragranceQuery.TotalFragrances = await query.CountAsync();
 
-
-            var fragrances = await dbContext.Fragrances
+            query = query
                 .Skip((fragranceQuery.CurrentPage - 1) * FragranceQuery.MoviesPerPage)
-                .Take(FragranceQuery.MoviesPerPage)
-                .AsNoTracking()
-                .FilterByCategoryId(fragranceQuery.CategoryId)
-                .FilterBySearchTerm(fragranceQuery.SearchTerm)
-                .OrderByPropertyName(fragranceQuery.OrderByClause?.PropertyName, fragranceQuery.OrderByClause?.Direction ?? OrderDirection.Desc)
-                .ToListAsync();
+                .Take(FragranceQuery.MoviesPerPage);
+
+            var fragrances = await query.AsNoTracking().ToListAsync();
 
             return mapper.Map<List<Fragrance>, List<FragranceDto>>(fragrances);
         }
+
 
         public async Task<IEnumerable<NoteDto>> GetNotes()
         {
