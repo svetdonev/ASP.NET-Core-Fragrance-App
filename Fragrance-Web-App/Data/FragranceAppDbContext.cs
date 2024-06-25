@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fragrance_Web_App.Data
 {
-    public class FragranceAppDbContext : IdentityDbContext
+    public class FragranceAppDbContext : IdentityDbContext<User>
     {
         public FragranceAppDbContext(DbContextOptions<FragranceAppDbContext> options)
             : base(options)
@@ -15,6 +15,33 @@ namespace Fragrance_Web_App.Data
         {
             builder.Entity<Fragrance>()
                 .HasKey(f => f.Id);
+
+            builder.Entity<Review>()
+                .HasOne(f => f.Author)
+                .WithMany(f => f.Reviews)
+                .HasForeignKey(f => f.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Review>()
+                .HasOne(f => f.Fragrance)
+                .WithMany(f => f.Reviews)
+                .HasForeignKey(f => f.FragranceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserReview>()
+                .HasKey(ur => new { ur.UserId, ur.ReviewId });
+
+            builder.Entity<UserReview>()
+                .HasOne(ur => ur.User)
+                .WithMany(ur => ur.UserReviews)
+                .HasForeignKey(ur => ur.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserReview>()
+                .HasOne(ur => ur.Review)
+                .WithMany(ur => ur.UserReviews)
+                .HasForeignKey(ur => ur.ReviewId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Category>()
                 .HasKey(c => c.Id);
@@ -53,6 +80,8 @@ namespace Fragrance_Web_App.Data
         }
         public DbSet<Fragrance> Fragrances { get; init; }
         public DbSet<Category> Categories { get; init; }
+        public DbSet<Review> Reviews { get; init; }
+        public DbSet<UserReview> UserReviews { get; init; }
         public DbSet<Note> Notes { get; init; }
         public DbSet<FragranceNote> FragranceNotes { get; init; }
     }
