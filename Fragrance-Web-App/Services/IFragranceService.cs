@@ -1,4 +1,5 @@
 ﻿using Fragrance_Web_App.Models;
+using System.Security.Claims;
 
 namespace Fragrance_Web_App.Services
 {
@@ -14,6 +15,7 @@ namespace Fragrance_Web_App.Services
         int GetTotalFragrancesCount();
         int GetUsersCount();
         Task<List<FragranceListingViewModel>> GetLatestFragrances();
+        Task CreateReview(FragranceDto fragranceModel, ClaimsPrincipal userPrincipal);
 
     }
 }

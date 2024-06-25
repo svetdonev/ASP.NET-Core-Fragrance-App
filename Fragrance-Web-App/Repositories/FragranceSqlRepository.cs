@@ -3,12 +3,14 @@ using Fragrance_Web_App.Data;
 using Fragrance_Web_App.Data.Models;
 using Fragrance_Web_App.Extensions;
 using Fragrance_Web_App.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Fragrance_Web_App.Repositories
 {
-    public class FragranceSqlRepository(FragranceAppDbContext dbContext, IMapper mapper) : IFragranceRepository
+    public class FragranceSqlRepository(FragranceAppDbContext dbContext, IMapper mapper, UserManager<User> userManager) : IFragranceRepository
     {
         /// <inheritdoc />
         public async Task<FragranceDto> CreateFragrance(Fragrance fragrance)
@@ -140,6 +142,34 @@ namespace Fragrance_Web_App.Repositories
                 })
                 .Take(8)
                 .ToListAsync();
+        }
+
+        public async Task CreateReview(FragranceDto fragranceModel, ClaimsPrincipal userPrincipal)
+        {
+            var fragrance = await dbContext.Fragrances.FindAsync(fragranceModel.Id);
+            var user = await userManager.GetUserAsync(userPrincipal);
+
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException("User is not authorized to create a review.");
+            }
+
+            if (string.IsNullOrWhiteSpace(fragranceModel.ReviewContent) || fragrance == null)
+            {
+                throw new ArgumentException("Something is broken!");
+            }
+
+            var review = new Review
+            {
+                Id = Guid.NewGuid().ToString(),
+                Content = fragranceModel.ReviewContent,
+                CreatedOn = DateTime.UtcNow.ToLocalTime(),
+                AuthorId = user.Id,
+                FragranceId = fragranceModel.Id
+            };
+
+            dbContext.Reviews.Add(review);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

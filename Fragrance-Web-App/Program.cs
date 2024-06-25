@@ -1,4 +1,5 @@
 using Fragrance_Web_App.Data;
+using Fragrance_Web_App.Data.Models;
 using Fragrance_Web_App.Infrastructure;
 using Fragrance_Web_App.Mapping;
 using Fragrance_Web_App.Repositories;
@@ -17,8 +18,9 @@ builder.Services.AddDbContext<FragranceAppDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<FragranceAppDbContext>();
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<FragranceAppDbContext>().AddDefaultTokenProviders();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

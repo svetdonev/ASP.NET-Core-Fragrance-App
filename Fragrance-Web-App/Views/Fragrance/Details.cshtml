@@ -31,3 +31,41 @@
         </div>
     </div>
 </div>
+
+<form asp-controller="Review" asp-action="Create" method="post">
+    <div class="d-flex card justify-content-center mt-3" style="background-color: #e6ccff">
+        <div class="d-flex flex-column col">
+            <div class="coment-bottom card-body bg-light p-2 px-4">
+                <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                    <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" width="38">
+
+                    <input asp-for="Id" class="form-control d-none">
+                    <span asp-validation-for="Id" class="small text-danger"></span>
+                    <input asp-for="ReviewContent" type="text" class="form-control mr-3 " placeholder="Add review">
+                    <span asp-validation-for="ReviewContent" class="small text-danger "></span>
+                    <button class="btn btn-primary " type="submit">Post</button>
+                </div>
+                <h2 class="mb-3">Reviews (@Model.Reviews.Count)</h2>
+                <div class="commented-section mt-2 mb-3" style="background-color: #e6ccff">
+                    @{
+                        foreach (var review in Model.Reviews)
+                        {
+                            <div class="d-flex flex-row align-items-center commented-user">
+                                <h5 class="media-img-40 mr-2"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" alt="avatar" />@review.AuthorName</h5><span class="dot mb-2"></span><span class="mb-2 ml-2">@review.CreatedOn</span>
+                            </div>
+                            <div class="comment-text-sm mb-4">
+                                <span>@review.Content</span>
+                                <div class="reply-section">
+                                    <div class="d-flex flex-row align-items-center voting-icons">
+                                        <span class="ml-2"></span><span class="dot ml-2"></span>
+                                        <h6 class="ml-2 mt-1">Reply</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

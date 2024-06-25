@@ -2,6 +2,7 @@
 using Fragrance_Web_App.Data.Models;
 using Fragrance_Web_App.Models;
 using Fragrance_Web_App.Repositories;
+using System.Security.Claims;
 
 namespace Fragrance_Web_App.Services
 {
@@ -61,6 +62,11 @@ namespace Fragrance_Web_App.Services
         public Task<List<FragranceListingViewModel>> GetLatestFragrances()
         {
             return fragranceRespository.GetLatestFragrances();
+        }
+
+        public Task CreateReview(FragranceDto fragranceModel, ClaimsPrincipal userPrincipal)
+        {
+            return fragranceRespository.CreateReview(fragranceModel, userPrincipal);
         }
     }
 }

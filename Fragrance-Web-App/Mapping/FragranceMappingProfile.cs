@@ -42,6 +42,8 @@ namespace Fragrance_Web_App.Mapping
 
             this.CreateMap<Category, CategoryDto>();
             this.CreateMap<Note, NoteDto>();
+            this.CreateMap<Review, ReviewDto>()
+                .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => src.Author.UserName));
             this.CreateMap<Fragrance, FragranceDto>()
                 .ForMember(dest => dest.Notes, opt => opt.MapFrom(src => src.FragranceNotes.Select(fn => fn.Note)));
         }
