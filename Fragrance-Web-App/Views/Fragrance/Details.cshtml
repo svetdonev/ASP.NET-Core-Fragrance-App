@@ -46,23 +46,23 @@
                     <button class="btn btn-primary " type="submit">Post</button>
                 </div>
                 <h2 class="mb-3">Reviews (@Model.Reviews.Count)</h2>
-                <div class="commented-section mt-2 mb-3" style="background-color: #e6ccff">
-                    @{
-                        foreach (var review in Model.Reviews)
-                        {
-                            <div class="d-flex flex-row align-items-center commented-user">
-                                <h5 class="media-img-40 mr-2"><img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" alt="avatar" />@review.AuthorName</h5><span class="dot mb-2"></span><span class="mb-2 ml-2">@review.CreatedOn</span>
+                <div class="commented-section mt-2 mb-3 p-3" style="background-color: #f7f7f7; border-radius: 10px;">
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <div class="comment mb-3 p-2" style="border-bottom: 1px solid #ddd;">
+                            <div class="d-flex align-items-center">
+                                <img class="img-fluid img-responsive rounded-circle mr-2" src="https://i.imgur.com/qdiP4DB.jpg" alt="avatar" style="width: 40px; height: 40px;">
+                                <h5 class="mb-0">@review.AuthorName</h5>
+                                <span class="dot ml-2"></span>
+                                <span class="text-muted ml-2">@review.CreatedOn</span>
                             </div>
-                            <div class="comment-text-sm mb-4">
-                                <span>@review.Content</span>
-                                <div class="reply-section">
-                                    <div class="d-flex flex-row align-items-center voting-icons">
-                                        <span class="ml-2"></span><span class="dot ml-2"></span>
-                                        <h6 class="ml-2 mt-1">Reply</h6>
-                                    </div>
+                            <div class="comment-text mt-2">
+                                <p class="mb-1">@review.Content</p>
+                                <div class="reply-section mt-2">
+                                    <button class="btn btn-sm btn-link p-0">Reply</button>
                                 </div>
                             </div>
-                        }
+                        </div>
                     }
                 </div>
             </div>
