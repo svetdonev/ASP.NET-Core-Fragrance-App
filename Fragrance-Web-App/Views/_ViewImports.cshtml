@@ -1,4 +1,7 @@
 ﻿@using Fragrance_Web_App
 @using Fragrance_Web_App.Models
 @using Fragrance_Web_App.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> userManager
+@inject SignInManager<User> signManager
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

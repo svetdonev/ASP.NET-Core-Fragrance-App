@@ -77,6 +77,8 @@ namespace Fragrance_Web_App.Repositories
                 .Include(f => f.Category)
                 .Include(f => f.FragranceNotes)
                 .ThenInclude(fn => fn.Note)
+                .Include(f => f.Reviews)
+                .ThenInclude(r => r.Author)
                 .FirstOrDefaultAsync(f => f.Id == fragranceId);
 
             var fragranceDto = mapper.Map<FragranceDto>(fragrance);
