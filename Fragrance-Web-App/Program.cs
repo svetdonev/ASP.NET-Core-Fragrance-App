@@ -14,6 +14,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddAutoMapper(typeof(FragranceMappingProfile));
 builder.Services.AddScoped<IFragranceService, FragranceService>();
 builder.Services.AddScoped<IFragranceRepository, FragranceSqlRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDbContext<FragranceAppDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
