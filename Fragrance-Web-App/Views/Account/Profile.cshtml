@@ -1,56 +1,131 @@
-﻿@model Fragrance_Web_App.Models.ProfileViewModel
-
-@{
+﻿@{
     ViewData["Title"] = "Profile";
 }
 
+@model ProfileViewModel
+
 <h2>Profile</h2>
 
-<form asp-action="Profile" method="post">
-    <div class="form-group">
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" class="form-control" readonly />
+<div class="row">
+    <div class="col-md-3">
+        <h4>Settings</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" id="editProfileLink">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Favorites</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Comments</a>
+            </li>
+        </ul>
     </div>
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+    <div class="col-md-6" id="profileInfo">
+        <div id="profileSummary">
+            <div class="text-center">
+                <img id="ProfilePicturePreview" src="@($"data:image/png;base64,{Model.Avatar ?? GetDefaultAvatar(Model.Gender)}")" alt="Avatar" class="img-fluid" />
+                <h3>@Model.UserName</h3>
+                <p>Registered on: @Model.RegisteredOn.ToString("MMMM dd, yyyy")</p>
+            </div>
+        </div>
+        <div id="profileForm" style="display:none;">
+            <form asp-action="Profile" method="post">
+                <div class="form-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender"></label>
+                    <select asp-for="Gender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AboutMe"></label>
+                    <textarea asp-for="AboutMe" class="form-control"></textarea>
+                    <span asp-validation-for="AboutMe" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
+    <div class="col-md-3">
+        <h4>Change Avatar</h4>
+        <form asp-action="ChangeAvatar" method="post">
+            <div class="form-group my-colorText">
+                <label asp-for="Avatar"></label>
+                <input asp-for="Avatar" class="form-control" id="ImageUrl" placeholder="Your profile picture URL here...">
+                <span asp-validation-for="Avatar" class="small text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Avatar</button>
+        </form>
     </div>
-    <div class="form-group">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="PhoneNumber"></label>
-        <input asp-for="PhoneNumber" class="form-control" />
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Gender"></label>
-        <input asp-for="Gender" class="form-control" />
-        <span asp-validation-for="Gender" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Avatar"></label>
-        <input asp-for="Avatar" class="form-control" />
-        <span asp-validation-for="Avatar" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="AboutMe"></label>
-        <textarea asp-for="AboutMe" class="form-control"></textarea>
-        <span asp-validation-for="AboutMe" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+</div>
 
 @section Scripts {
+    <script>
+        document.getElementById("editProfileLink").addEventListener("click", function (event) {
+            event.preventDefault();
+            var profileForm = document.getElementById("profileForm");
+            var profileSummary = document.getElementById("profileSummary");
+            if (profileForm.style.display === "none") {
+                profileForm.style.display = "block";
+                profileSummary.style.display = "none";
+            } else {
+                profileForm.style.display = "none";
+                profileSummary.style.display = "block";
+            }
+        });
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            var imageUrlInput = $('#ImageUrl');
+
+            imageUrlInput.on("input", function () {
+                var url = $(this).val();
+                output.src = url ? url : "@GetDefaultAvatar(Model.Gender)";
+            });
+        });
+    </script>
+}
+
+@functions {
+    private string GetDefaultAvatar(string gender)
+    {
+        return gender switch
+        {
+            "Male" => "base64stringForDefaultMaleAvatar",
+            "Female" => "base64stringForDefaultFemaleAvatar",
+            _ => "base64stringForDefaultOtherAvatar"
+        };
     }
 }

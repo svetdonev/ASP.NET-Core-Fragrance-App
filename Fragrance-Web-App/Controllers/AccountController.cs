@@ -4,12 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fragrance_Web_App.Controllers
 {
-    public class AccountController(IUserService userService) : Controller
+    public class AccountController : Controller
     {
+        private readonly IUserService _userService;
+
+        public AccountController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var model = await userService.GetProfileAsync(User.Identity.Name);
+            var model = await _userService.GetProfileAsync(User.Identity.Name);
             if (model == null)
             {
                 return NotFound();
@@ -24,7 +31,7 @@ namespace Fragrance_Web_App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await userService.UpdateProfileAsync(model);
+                var result = await _userService.UpdateProfileAsync(model);
                 if (result)
                 {
                     // Optionally add a success message
@@ -35,6 +42,25 @@ namespace Fragrance_Web_App.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeAvatar(ProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.UpdateAvatarAsync(User.Identity.Name, model.Avatar);
+                if (result)
+                {
+                    // Optionally add a success message
+                    return RedirectToAction("Profile");
+                }
+
+                ModelState.AddModelError(string.Empty, "An error occurred while updating the avatar.");
+            }
+
+            return View("Profile", model); // Return to the profile view with validation errors if any
         }
     }
 }

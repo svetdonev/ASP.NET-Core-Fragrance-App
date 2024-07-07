@@ -3,11 +3,18 @@ using Fragrance_Web_App.Repositories;
 
 namespace Fragrance_Web_App.Services
 {
-    public class UserService(IUserRepository userRepository) : IUserService
+    public class UserService : IUserService
     {
+        private readonly IUserRepository _userRepository;
+
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         public async Task<ProfileViewModel> GetProfileAsync(string username)
         {
-            var user = await userRepository.GetUserByUsernameAsync(username);
+            var user = await _userRepository.GetUserByUsernameAsync(username);
             if (user == null)
             {
                 return null;
@@ -22,7 +29,9 @@ namespace Fragrance_Web_App.Services
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
                 Avatar = user.Avatar,
-                AboutMe = user.AboutMe
+                AboutMe = user.AboutMe,
+                Gender = user.Gender,
+                RegisteredOn = user.RegisteredOn
             };
 
             return model;
@@ -30,7 +39,7 @@ namespace Fragrance_Web_App.Services
 
         public async Task<bool> UpdateProfileAsync(ProfileViewModel model)
         {
-            var user = await userRepository.GetUserByIdAsync(model.Id);
+            var user = await _userRepository.GetUserByIdAsync(model.Id);
 
             if (user == null)
             {
@@ -41,10 +50,22 @@ namespace Fragrance_Web_App.Services
             user.LastName = model.LastName;
             user.Email = model.Email;
             user.PhoneNumber = model.PhoneNumber;
-            user.Avatar = model.Avatar;
+            user.Gender = model.Gender;
             user.AboutMe = model.AboutMe;
 
-            return await userRepository.UpdateUserAsync(user);
+            return await _userRepository.UpdateUserAsync(user);
+        }
+
+        public async Task<bool> UpdateAvatarAsync(string username, string avatarUrl)
+        {
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.Avatar = avatarUrl;
+            return await _userRepository.UpdateUserAsync(user);
         }
     }
 }

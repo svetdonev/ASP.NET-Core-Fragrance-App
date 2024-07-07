@@ -13,6 +13,7 @@ namespace Fragrance_Web_App.Models
         public string PhoneNumber { get; set; }
         public string Gender { get; set; }
         public string AboutMe { get; set; }
+        public DateTime RegisteredOn { get; set; }
 
     }
 }
