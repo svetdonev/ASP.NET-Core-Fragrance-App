@@ -55,17 +55,9 @@ namespace Fragrance_Web_App.Services
 
             return await _userRepository.UpdateUserAsync(user);
         }
-
-        public async Task<bool> UpdateAvatarAsync(string username, string avatarUrl)
+        public async Task UpdateUserAvatarAsync(string userId, string avatarImageUrl)
         {
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-            if (user == null)
-            {
-                return false;
-            }
-
-            user.Avatar = avatarUrl;
-            return await _userRepository.UpdateUserAsync(user);
+            await _userRepository.UpdateUserAvatarAsync(userId, avatarImageUrl);
         }
     }
 }

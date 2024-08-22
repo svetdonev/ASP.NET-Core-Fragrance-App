@@ -6,6 +6,6 @@ namespace Fragrance_Web_App.Services
     {
         Task<ProfileViewModel> GetProfileAsync(string username);
         Task<bool> UpdateProfileAsync(ProfileViewModel model);
-        Task<bool> UpdateAvatarAsync(string username, string avatarUrl);
+        Task UpdateUserAvatarAsync(string userId, string avatarImageUrl);
     }
 }

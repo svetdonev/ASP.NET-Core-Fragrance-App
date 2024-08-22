@@ -7,5 +7,6 @@ namespace Fragrance_Web_App.Repositories
         Task<User> GetUserByUsernameAsync(string username);
         Task<User> GetUserByIdAsync(string id);
         Task<bool> UpdateUserAsync(User user);
+        Task UpdateUserAvatarAsync(string userId, string avatarImageUrl);
     }
 }

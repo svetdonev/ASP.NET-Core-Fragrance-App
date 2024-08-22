@@ -45,22 +45,14 @@ namespace Fragrance_Web_App.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangeAvatar(ProfileViewModel model)
+        public async Task<IActionResult> ChangeAvatar(string userId, string avatarImageUrl)
         {
             if (ModelState.IsValid)
             {
-                var result = await _userService.UpdateAvatarAsync(User.Identity.Name, model.Avatar);
-                if (result)
-                {
-                    // Optionally add a success message
-                    return RedirectToAction("Profile");
-                }
-
-                ModelState.AddModelError(string.Empty, "An error occurred while updating the avatar.");
+                await _userService.UpdateUserAvatarAsync(userId, avatarImageUrl);
+                TempData["SuccessMessage"] = "Avatar updated successfully!";
             }
-
-            return View("Profile", model); // Return to the profile view with validation errors if any
+            return RedirectToAction("Profile", new { userId });
         }
     }
 }

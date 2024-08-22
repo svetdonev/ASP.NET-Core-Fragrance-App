@@ -1,0 +1,15 @@
+﻿@model ProfileViewModel
+
+<div id="profileSummary">
+    <div class="text-center">
+        <img id="ProfilePicturePreview" src="@Model.Avatar ?? GetDefaultAvatar(Model.Gender)" alt="Avatar" class="img-fluid" />
+        <h3>@Model.UserName</h3>
+        <p>Registered on: @Model.RegisteredOn.ToString("MMMM dd, yyyy")</p>
+        @if (TempData["AvatarUpdateSuccess"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["AvatarUpdateSuccess"]
+            </div>
+        }
+    </div>
+</div>
